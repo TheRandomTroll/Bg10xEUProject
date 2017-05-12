@@ -15,14 +15,40 @@ namespace ProjectMilky.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+
+
+            return View();
+        }
+
+        public ActionResult Materials()
+        {
+
+
+            return View();
+        }
+
+        public ActionResult TUES()
+        {
+
+
+            return View();
+        }
+        public ActionResult NPMG()
+        {
+
+
+            return View();
+        }
+        public ActionResult JohnAtanassov()
+        {
+
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            //ViewBag.Message = "";
 
             return View();
         }

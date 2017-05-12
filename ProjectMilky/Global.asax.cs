@@ -20,13 +20,6 @@ namespace ProjectMilky
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Mapper.Initialize(
-                expression =>
-                    {
-                        expression.CreateMap<ApplicationUser, Student>(); 
-                        expression.CreateMap<ApplicationUser, Teacher>(); 
-                        
-                    });
         }
     }
 }

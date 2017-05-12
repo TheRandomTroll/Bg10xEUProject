@@ -203,24 +203,23 @@
     <Compile Include="Attributes\RequireCodeFilter.cs" />
     <Compile Include="Attributes\TeachersOnlyAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ConsultationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Grade.cs" />
+    <Compile Include="Models\Consultation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\School.cs" />
-    <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\Subject.cs" />
-    <Compile Include="Models\Teacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\logo2.png" />
     <Content Include="favicon.ico" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -255,9 +254,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -280,6 +276,20 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Teachers\UploadFile.cshtml" />
+    <Content Include="Views\Home\JohnAtanassov.cshtml" />
+    <Content Include="Views\Home\Materials.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\NPMG.cshtml" />
+    <Content Include="Views\Home\TUES.cshtml" />
+    <Content Include="Views\Home\Schools.cshtml" />
+    <Content Include="Views\Consultations\Create.cshtml" />
+    <Content Include="Views\Consultations\Delete.cshtml" />
+    <Content Include="Views\Consultations\Details.cshtml" />
+    <Content Include="Views\Consultations\Edit.cshtml" />
+    <Content Include="Views\Consultations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

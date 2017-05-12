@@ -84,7 +84,7 @@ namespace ProjectMilky.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -160,33 +160,14 @@ namespace ProjectMilky.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user;
-                switch (model.Role)
-                {
-                    case "Student":
-                        user = new Student
-                        {
-                            UserName = model.Username,
-                            Email = model.Email,
-                            FirstName = model.FirstName,
-                            LastName = model.LastName,
-                        };
-                        break;
-                    case "Teacher":
-                        user = new Teacher
-                        {
-                            UserName = model.Username,
-                            Email = model.Email,
-                            FirstName = model.FirstName,
-                            LastName = model.LastName,
-                            SubjectTaught = context.Subjects.Find(int.Parse(model.Subject))
-                        };
-                    
-                        break;
-                    default:
-                        return this.View();
-
-                }
+                ApplicationUser user = new ApplicationUser
+                                           {
+                                               UserName = model.Username,
+                                               Email = model.Email,
+                                               FirstName = model.FirstName,
+                                               LastName = model.LastName
+                                           };
+               
                 var result = await UserManager.CreateAsync(user, model.Password);
                 this.userManager.AddToRole(user.Id, model.Role);
                 if (result.Succeeded)

@@ -17,11 +17,8 @@ namespace ProjectMilky.Models
             return userIdentity;
         }
         public string FirstName { get; set; }
-
         public string LastName { get; set; }
         public bool IsAccountConfirmed { get; set; }
-        [NotMapped]
-        public string FullName => FirstName + " " + LastName;
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -31,15 +28,10 @@ namespace ProjectMilky.Models
         {
         }
 
-
+        public virtual DbSet<Consultation> Consultations { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-
-        public virtual DbSet<School> Schools { get; set; }
-        public virtual DbSet<Subject> Subjects { get; set; }
-
-
     }
 }
