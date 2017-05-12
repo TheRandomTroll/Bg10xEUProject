@@ -5,6 +5,11 @@ namespace ProjectMilky.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+
+    using ProjectMilky.Models;
+
     internal sealed class Configuration : DbMigrationsConfiguration<ProjectMilky.Models.ApplicationDbContext>
     {
         public Configuration()
@@ -14,18 +19,22 @@ namespace ProjectMilky.Migrations
 
         protected override void Seed(ProjectMilky.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            var userStore = new UserStore<ApplicationUser>(context);
+            var userManager = new UserManager<ApplicationUser>(userStore);
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var roleStore = new RoleStore<IdentityRole>(context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            if (!roleStore.Roles.Any())
+            {
+                roleManager.Create(new IdentityRole("Student"));
+                roleManager.Create(new IdentityRole("Teacher"));
+                roleManager.Create(new IdentityRole("Principal"));
+                roleManager.Create(new IdentityRole("Administrator"));
+            }
+            if (!userManager.Users.Any())
+            {
+                
+            }
         }
     }
 }

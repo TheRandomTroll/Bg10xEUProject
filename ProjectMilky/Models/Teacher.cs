@@ -5,7 +5,8 @@ using System.Web;
 
 namespace ProjectMilky.Models
 {
-    public class Teacher
+    public class Teacher : ApplicationUser
     {
+        public virtual Subject SubjectTaught { get; set; }
     }
 }
