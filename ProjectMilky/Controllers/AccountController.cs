@@ -12,17 +12,27 @@ using ProjectMilky.Models;
 
 namespace ProjectMilky.Controllers
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
+
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private static ApplicationDbContext context = new ApplicationDbContext();
+
+
+        private static UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(context);
+        private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+
+        private static RoleStore<IdentityRole> roleStore = new RoleStore<IdentityRole>(context);
+        private RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(roleStore);
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +44,9 @@ namespace ProjectMilky.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -51,7 +61,6 @@ namespace ProjectMilky.Controllers
                 _userManager = value;
             }
         }
-
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -120,7 +129,7 @@ namespace ProjectMilky.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -151,12 +160,39 @@ namespace ProjectMilky.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
+                ApplicationUser user;
+                switch (model.Role)
+                {
+                    case "Student":
+                        user = new Student
+                        {
+                            UserName = model.Username,
+                            Email = model.Email,
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                        };
+                        break;
+                    case "Teacher":
+                        user = new Teacher
+                        {
+                            UserName = model.Username,
+                            Email = model.Email,
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            SubjectTaught = context.Subjects.Find(int.Parse(model.Subject))
+                        };
+                    
+                        break;
+                    default:
+                        return this.View();
+
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
+                this.userManager.AddToRole(user.Id, model.Role);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

@@ -7,6 +7,10 @@ namespace ProjectMilky.Models
 {
     public class Subject
     {
+        public Subject()
+        {
+            this.Students = new List<ApplicationUser>();
+        }
         public int Id { get; set; }
 
         public string Name { get; set; }

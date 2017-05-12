@@ -5,6 +5,7 @@ using System.Web;
 
 namespace ProjectMilky.Models
 {
+    using System.ComponentModel.DataAnnotations.Schema;
     public class Student : ApplicationUser
     {
         public Student()
@@ -12,7 +13,5 @@ namespace ProjectMilky.Models
             this.Grades = new List<Grade>();
         }
         public ICollection<Grade> Grades { get; set; }
-
-        public virtual School School { get; set; }
     }
 }

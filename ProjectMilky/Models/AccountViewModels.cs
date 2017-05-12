@@ -90,7 +90,18 @@ namespace ProjectMilky.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [Display(Name = "Role")]
         public string Role { get; set; }
+
+        [Required]
+        [Display(Name = "School")]
+        public string School { get; set; }
+
+        [Display(Name = "Subject")]
+        public string Subject { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

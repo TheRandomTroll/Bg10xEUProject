@@ -6,6 +6,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ProjectMilky.Models
 {
+    using System.ComponentModel.DataAnnotations.Schema;
+
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
@@ -14,6 +16,12 @@ namespace ProjectMilky.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             return userIdentity;
         }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+        public bool IsAccountConfirmed { get; set; }
+        [NotMapped]
+        public string FullName => FirstName + " " + LastName;
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
