@@ -19,18 +19,18 @@ namespace ProjectMilky.Controllers
 
     using ProjectMilky.Attributes;
 
-    [TeachersOnly]
+    
     public class ConsultationsController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private static ApplicationDbContext db = new ApplicationDbContext();
+        private static ApplicationDbContext db = db ?? new ApplicationDbContext();
 
 
-        private static UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(db);
+        private static UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
         private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
 
-        private static RoleStore<IdentityRole> roleStore = new RoleStore<IdentityRole>(db);
+        private static RoleStore<IdentityRole> roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
         private RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(roleStore);
 
         public ApplicationSignInManager SignInManager
@@ -94,14 +94,14 @@ namespace ProjectMilky.Controllers
         {
             if (ModelState.IsValid)
             {
-                consultation.Teacher = db.Users.First(x => x.Id == User.Identity.GetUserId());
+                consultation.Teacher = db.Users.First(x => x.UserName == User.Identity.Name);
                 db.Consultations.Add(consultation);
                 await db.SaveChangesAsync();
                 foreach (var userRole in this.roleManager.FindByName("Student").Users)
                 {
                     var user = db.Users.First(x => x.Id == userRole.UserId);
                     var body = $"<p>Salutations, {user.FirstName} {user.LastName}!</p>"
-                               + $"We would love to inform you that your teacher, {User.Identity.Name}, has started a new consultation."
+                               + $"We would love to inform you that your teacher, who goes by the name of {User.Identity.Name}, has started a new consultation."
                                + $" You can see it here: <a href=\"{consultation.YoutubeUrl}\">{consultation.Subject}</a></p>";
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(user.Email));
@@ -123,13 +123,14 @@ namespace ProjectMilky.Controllers
                         smtp.EnableSsl = true;
                         await smtp.SendMailAsync(message);
                     }
-                    return RedirectToAction("Index");
                 }
+                return RedirectToAction("Index");
             }
             return View(consultation);
         }
 
         // GET: Consultations/Edit/5
+        [TeachersOnly]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -184,15 +185,6 @@ namespace ProjectMilky.Controllers
             db.Consultations.Remove(consultation);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

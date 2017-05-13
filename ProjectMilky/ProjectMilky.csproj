@@ -206,7 +206,6 @@
     <Compile Include="Controllers\ConsultationsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -276,7 +275,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Teachers\UploadFile.cshtml" />
     <Content Include="Views\Home\JohnAtanassov.cshtml" />
     <Content Include="Views\Home\Materials.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
