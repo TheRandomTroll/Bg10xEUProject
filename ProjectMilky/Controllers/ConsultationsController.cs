@@ -16,10 +16,11 @@ namespace ProjectMilky.Controllers
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
-
+    using PagedList;
     using ProjectMilky.Attributes;
 
     
+    [Authorize]
     public class ConsultationsController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -58,9 +59,11 @@ namespace ProjectMilky.Controllers
         }
 
         // GET: Consultations
-        public async Task<ActionResult> Index()
+        public ActionResult Index(int? page)
         {
-            return View(await db.Consultations.ToListAsync());
+            int pageNumber = page ?? 1;
+            int pageSize = 5;
+            return View(db.Consultations.ToList().ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Consultations/Details/5
@@ -78,6 +81,7 @@ namespace ProjectMilky.Controllers
             return View(consultation);
         }
 
+        [TeachersOnly]
         // GET: Consultations/Create
         public ActionResult Create()
         {
@@ -101,8 +105,8 @@ namespace ProjectMilky.Controllers
                 {
                     var user = db.Users.First(x => x.Id == userRole.UserId);
                     var body = $"<p>Salutations, {user.FirstName} {user.LastName}!</p>"
-                               + $"We would love to inform you that your teacher, who goes by the name of {User.Identity.Name}, has started a new consultation."
-                               + $" You can see it here: <a href=\"{consultation.YoutubeUrl}\">{consultation.Subject}</a></p>";
+                               + $"We would love to inform you that your teacher, {consultation.Teacher.FirstName} {consultation.Teacher.LastName}, has started a new consultation."
+                               + $"<br />You can see it here: <a href=\"{consultation.YoutubeUrl}\">{consultation.Subject}</a></p>";
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(user.Email));
                     message.From = new MailAddress("eschool.donotreply@gmail.com");
@@ -162,6 +166,7 @@ namespace ProjectMilky.Controllers
         }
 
         // GET: Consultations/Delete/5
+        [TeachersOnly]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)

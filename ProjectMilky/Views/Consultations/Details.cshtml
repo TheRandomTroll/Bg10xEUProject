@@ -1,33 +1,33 @@
 ﻿@model ProjectMilky.Models.Consultation
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Детайли за консултация";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
     <h4>Consultation</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Subject)
+            Тема на консултацията
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Subject)
         </dd>
-
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            Описание
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
-
+        <br />
         <dt>
-            @Html.DisplayNameFor(model => model.YoutubeUrl)
+            Линк към YouTube Livestream
         </dt>
 
         <dd>
@@ -37,6 +37,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Обратно към списъка", "Index", null, new { @class = "btn btn-danger" })
 </p>

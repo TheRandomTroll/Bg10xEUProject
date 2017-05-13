@@ -29,6 +29,10 @@ namespace ProjectMilky.Models
         }
 
         public virtual DbSet<Consultation> Consultations { get; set; }
+        public virtual DbSet<Lesson> Lessons { get; set; }
+        public virtual DbSet<File> Files { get; set; }
+
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

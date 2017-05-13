@@ -1,0 +1,57 @@
+﻿@model ProjectMilky.Models.Lesson
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Детайли</h2>
+
+@if (User.IsInRole("Teacher") && User.Identity.Name == Model.Teacher.UserName)
+{
+    <p>
+        @Html.ActionLink("Добави Ресурс", "AddResource", new { id = Model.Id }, new { @class = "btn btn-success" })
+    </p>
+    <br />
+}
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Име на урок
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            Име на учител
+        </dt>
+
+        <dd>
+            @Model.Teacher.FirstName @Model.Teacher.LastName
+        </dd>
+
+        <dt>
+            Описание
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            Ресурси
+        </dt>
+        <dd>
+
+            <ul>
+                @foreach (var item in Model.Resources)
+            {
+                    <li><a href="~/Resources/@Model.Id/@item.Name" target="_blank">@item.Name</a></li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Обратно към списък", "Index", null, new { @class = "btn btn-danger" })
+</p>

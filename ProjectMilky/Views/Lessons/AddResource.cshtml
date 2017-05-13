@@ -1,0 +1,22 @@
+﻿@model ProjectMilky.Models.Lesson
+
+@{
+    ViewBag.Title = "Добавяне на ресурс";
+}
+
+<h2>Добавяне на ресурс</h2>
+
+@using (Html.BeginForm("AddResource", "Lessons", FormMethod.Post,
+                      new { enctype = "multipart/form-data" }))
+{
+
+    <div class="form-group">
+        @Html.Hidden("id", Model.Id)
+        <input type="file" name="file" class="form-control"/>
+    </div>
+    <input type="submit" value="Качи" class="btn btn-primary" />
+
+    <div class="err">
+        @Html.ValidationSummary()
+    </div>
+}

@@ -3,17 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - E-School</title>
+    <title>@ViewBag.Title - Хакатон по случай 10 годишнината от присъединяването на България към ЕС</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+        #image {
+            background-image: url("~/Content/image.jpg");
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:lawngreen;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:blue;">
         <div class="container">
             <div class="navbar-header" style=" min-height: 40px; max-height: 40px; height: 40px; ">
 
-                <a class="navbar-brand" href="/Home/Index">
-                    <img src="@Url.Content("~/Content/logo2.png")" style="width: 30px; height: 35px; " alt="Logo"/></a>
+                <a class="navbar-brand" style="padding: 2px" href="/Home/Index"><img src="@Url.Content("~/Content/logo.png")" style="width: 40px; height: 45px; " /></a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -24,20 +28,22 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="buttons">@Html.ActionLink("Index", "Index", "Home", null, new { @style = "color:red" })</li>
-                    <li class="buttons">@Html.ActionLink("About", "About", "Home", null, new { @style = "color:red" })</li>
+                    <li class="buttons">@Html.ActionLink("Начало", "Index", "Home", null, new { @style = "color:white" })</li>
+                    <li class="buttons">@Html.ActionLink("За проекта", "About", "Home", null, new { @style = "color:white" })</li>
+
+
                     <li class="dropdown">
+
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <span style="color:red">Schools</span>
+                            <span style="color:white">Материали</span>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("TUES", "TUES", "Home", null, new { @style = "color:red;background-color:white" })</li>
-                            <li>@Html.ActionLink("NPMG", "NPMG", "Home", null, new { @style = "color:white;background-color:green" })</li>
-                            <li>@Html.ActionLink("John Atanassov", "JohnAtanassov", "Home", null, new { @style = "color:green;background-color:red" })</li>
+                            <li>@Html.ActionLink("Консултации", "Index", "Consultations")</li>
+                            <li>@Html.ActionLink("Уроци", "Index", "Lessons")</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Contacts", "Contact", "Home", null, new { @style = "color:red" })</li>
+                    <li>@Html.ActionLink("Контакти", "Contact", "Home", null, new { @style = "color:white" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -48,7 +54,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - E-School</p>
+            <p>&copy; @DateTime.Now.Year - Хакатон по случай 10 годишнината от присъединяването на България към ЕС</p>
         </footer>
     </div>
     @Scripts.Render("~/bundles/jquery")
