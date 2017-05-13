@@ -104,13 +104,13 @@ namespace ProjectMilky.Controllers
                 foreach (var userRole in this.roleManager.FindByName("Student").Users)
                 {
                     var user = db.Users.First(x => x.Id == userRole.UserId);
-                    var body = $"<p>Salutations, {user.FirstName} {user.LastName}!</p>"
-                               + $"We would love to inform you that your teacher, {consultation.Teacher.FirstName} {consultation.Teacher.LastName}, has started a new consultation."
-                               + $"<br />You can see it here: <a href=\"{consultation.YoutubeUrl}\">{consultation.Subject}</a></p>";
+                    var body = $"<p>Здравейте, {user.FirstName} {user.LastName}!</p>"
+                               + $"Бихме желали да Ви осведомим, че г-н/г-жа {consultation.Teacher.FirstName} {consultation.Teacher.LastName} току-що започна."
+                               + $"<br />Можете да я видите тук: <a href=\"{consultation.YoutubeUrl}\">{consultation.Subject}</a></p>";
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(user.Email));
                     message.From = new MailAddress("eschool.donotreply@gmail.com");
-                    message.Subject = "A new consultation has been added";
+                    message.Subject = "Нова консултация";
                     message.Body = body;
                     message.IsBodyHtml = true;
 

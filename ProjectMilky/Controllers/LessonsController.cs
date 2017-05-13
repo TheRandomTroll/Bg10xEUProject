@@ -126,7 +126,11 @@ namespace ProjectMilky.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Lesson lesson = db.Lessons.Find(id);
-            db.Lessons.Remove(lesson);
+            db.Lessons.Attach(lesson);
+            db.Entry(lesson).Collection("Resources").Load();
+
+            lesson.Resources.ToList().ForEach(t => db.Files.Remove(t));
+            db.Entry(lesson).State = EntityState.Deleted;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
